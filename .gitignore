@@ -15,6 +15,8 @@ Thumbs.db
 # Backend specific
 backend/.env
 backend/node_modules/
+backend\package-lock.json
+backend\package.json
 backend/*.log
 backend/*.tmp
 
@@ -22,6 +24,7 @@ backend/*.tmp
 frontend/.gitignore
 frontend/node_modules/
 frontend/package-lock.json
+frontend\package.json
 frontend/public/build/
 frontend/.cache/
 frontend/dist/
