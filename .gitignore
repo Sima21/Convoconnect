@@ -13,20 +13,20 @@ node_modules/
 Thumbs.db
 
 # Backend specific
-backend/.env
-backend/node_modules/
-backend/package-lock.json
-backend/package.json
-backend/*.log
-backend/*.tmp
+convoconnect/backend/.env
+convoconnect/backend/node_modules/
+/convoconnect/backend/package-lock.json
+/convoconnect/backend/package.json
+/convoconnect/backend/*.log
+/convoconnect/backend/*.tmp
 
 # Frontend specific
-frontend/.gitignore
-frontend/node_modules/
-frontend/package-lock.json
-frontend/package.json
-frontend/public/build/
-frontend/.cache/
-frontend/dist/
+/convoconnect/frontend/.gitignore
+/convoconnect/frontend/node_modules/
+/convoconnect/frontend/package-lock.json
+/convoconnect/frontend/package.json
+/convoconnect/frontend/public/build/
+/convoconnect/frontend/.cache/
+/convoconnect/frontend/dist/
 
 
