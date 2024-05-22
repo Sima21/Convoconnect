@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { fetchGroups } from '../api'; 
 import CreateGroup from './CreateGroup'; // Import the CreateGroup component
+import JitsiMeetComponent from './JitsiMeetComponent'; // Import the JitsiMeetComponent
 
 function Dashboard() {
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [currentRoom, setCurrentRoom] = useState(null); // State to hold the current Jitsi room to join
 
     useEffect(() => {
         const loadGroups = async () => {
@@ -24,6 +25,11 @@ function Dashboard() {
         loadGroups();
     }, []);
 
+    // Function to handle opening a Jitsi meeting
+    const handleJoinMeeting = (roomName) => {
+        setCurrentRoom(roomName); // Set the room name to open the Jitsi meeting
+    };
+
     return (
         <div>
             <h1>Dashboard</h1>
@@ -36,12 +42,17 @@ function Dashboard() {
                 <ul>
                     {groups.map(group => (
                         <li key={group.id}>
-                            {group.name} - <Link to={`/meet/${group.name}`}>Join Meeting</Link>
+                            {group.name} - 
+                            <button onClick={() => handleJoinMeeting(group.name)}>Join Meeting</button>
                         </li>
                     ))}
                 </ul>
             ) : (
                 <p>No groups to display.</p>
+            )}
+            {/* Conditionally render the JitsiMeetComponent if a room is selected */}
+            {currentRoom && (
+                <JitsiMeetComponent roomName={currentRoom} />
             )}
         </div>
     );

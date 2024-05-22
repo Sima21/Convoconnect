@@ -1,1 +1,29 @@
+# Dependency directories
 node_modules/
+
+# Environment variables
+.env
+
+# Ignore all log files and temporary files
+*.log
+*.tmp
+
+# Operating system generated files
+.DS_Store
+Thumbs.db
+
+# Backend specific
+backend/.env
+backend/node_modules/
+backend/*.log
+backend/*.tmp
+
+# Frontend specific
+frontend/.gitignore
+frontend/node_modules/
+frontend/package-lock.json
+frontend/public/build/
+frontend/.cache/
+frontend/dist/
+
+
