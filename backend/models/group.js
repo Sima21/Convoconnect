@@ -10,12 +10,12 @@ const Group = sequelize.define('Group', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  jitsiRoomId: { // New field for storing Jitsi room ID
+  jitsiRoomId: {
     type: DataTypes.STRING,
-    allowNull: true
-  }
+    allowNull: true,
+  },
 }, {
-  // additional options
+  timestamps: true,
 });
 
 module.exports = Group;
