@@ -15,7 +15,11 @@ const User = sequelize.define('User', {
     },
     password: {
         type: DataTypes.STRING,
+<<<<<<< HEAD
         allowNull: true // Allow password to be null for OAuth users
+=======
+        allowNull: true // Allow password to be null
+>>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
     },
     googleId: {
         type: DataTypes.STRING,
@@ -23,4 +27,8 @@ const User = sequelize.define('User', {
     }
 });
 
+<<<<<<< HEAD
 module.exports = User;
+=======
+module.exports = User;
+>>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe

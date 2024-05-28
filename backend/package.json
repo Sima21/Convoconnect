@@ -19,7 +19,10 @@
     "google-auth-library": "^9.10.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.5",
+<<<<<<< HEAD
     "morgan": "^1.10.0",
+=======
+>>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
     "nodemailer": "^6.9.13",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 //backend\config\database.js
+=======
+>>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 

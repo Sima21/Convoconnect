@@ -2,8 +2,11 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const Group = require('../models/group');
+<<<<<<< HEAD
 const User = require('../models/user');
 const UserGroup = require('../models/userGroup');
+=======
+>>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
 const { protect } = require('../middleware/authMiddleware');
 const router = express.Router();
 
@@ -18,6 +21,7 @@ router.post('/create', protect, async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 router.post('/:groupId/generate-meet', protect, async (req, res) => {
     try {
         const { groupId } = req.params;
@@ -48,6 +52,13 @@ router.get('/', protect, async (req, res) => {
                 model: User,
                 through: UserGroup,
                 as: 'groupUsers'
+=======
+router.get('/', protect, async (req, res) => {
+    try {
+        const groups = await Group.findAll({
+            where: {
+                owner: req.user.id
+>>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
             }
         });
         res.json({ groups });
@@ -83,7 +94,10 @@ router.post('/:groupId/invite', protect, async (req, res) => {
     const { email } = req.body;
     const { groupId } = req.params;
     const senderEmail = req.user.email;
+<<<<<<< HEAD
     const senderUsername = req.user.username;
+=======
+>>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
 
     try {
         const group = await Group.findOne({ where: { id: groupId, owner: req.user.id } });
@@ -102,6 +116,7 @@ router.post('/:groupId/invite', protect, async (req, res) => {
         const mailOptions = {
             from: senderEmail,
             to: email,
+<<<<<<< HEAD
             subject: 'You\'re Invited to Join Our Group!',
             html: `
                 <h2>Hello,</h2>
@@ -111,6 +126,10 @@ router.post('/:groupId/invite', protect, async (req, res) => {
                 <p>Looking forward to seeing you!</p>
                 <p>Best regards,<br/>The Team</p>
             `
+=======
+            subject: 'Group Invitation',
+            text: `You have been invited to join the group "${group.name}" by ${senderEmail}.`
+>>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
         };
 
         await transporter.sendMail(mailOptions);
@@ -121,6 +140,7 @@ router.post('/:groupId/invite', protect, async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 router.post('/join/:groupId', protect, async (req, res) => {
     const { groupId } = req.params;
     const userId = req.user.id;
@@ -141,4 +161,6 @@ router.post('/join/:groupId', protect, async (req, res) => {
     }
 });
 
+=======
+>>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
 module.exports = router;
