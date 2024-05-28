@@ -1,3 +1,4 @@
+//backend\migrations\20240520153555-add-jitsiRoomId-to-groups.js
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */

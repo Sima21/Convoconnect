@@ -1,12 +1,14 @@
+//frontend\src\components\JitsiMeetComponent.js
 import React, { useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function JitsiMeetComponent({ roomName, onMeetingEnd }) {
+function JitsiMeetComponent() {
+    const { roomName } = useParams();
     const jitsiContainerRef = useRef(null);
     const jitsiApiRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('Mounting JitsiMeetComponent:', roomName);
-
         const loadJitsiScript = () => {
             if (!window.JitsiMeetExternalAPI) {
                 const script = document.createElement('script');
@@ -28,22 +30,23 @@ function JitsiMeetComponent({ roomName, onMeetingEnd }) {
                     height: 700,
                 });
 
-                jitsiApiRef.current.addEventListener('readyToClose', onMeetingEnd);
+                jitsiApiRef.current.addEventListener('readyToClose', () => {
+                    navigate('/dashboard');
+                });
             }
         };
 
         loadJitsiScript();
 
         return () => {
-            console.log('Unloading JitsiMeetComponent:', roomName);
             if (jitsiApiRef.current) {
                 jitsiApiRef.current.dispose();
                 jitsiApiRef.current = null;
             }
         };
-    }, [roomName, onMeetingEnd]);
+    }, [roomName, navigate]);
 
-    return <div ref={jitsiContainerRef} />;
+    return <div ref={jitsiContainerRef} style={{ height: '100vh' }} />;
 }
 
 export default JitsiMeetComponent;

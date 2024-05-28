@@ -1,20 +1,36 @@
 // frontend/src/components/MeetingRoom.js
-import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import JitsiMeetComponent from './JitsiMeetComponent';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+const domain = 'localhost:8443'; // Your Jitsi server domain
 
 function MeetingRoom() {
-    const { roomName } = useParams();  // Get the room name from the URL parameter
+    const { roomName } = useParams();
     const navigate = useNavigate();
 
-    const handleMeetingEnd = () => {
-        navigate('/dashboard');  // Redirect to dashboard on meeting end
-    };
+    useEffect(() => {
+        const options = {
+            roomName: roomName,
+            width: '100%',
+            height: '100%',
+            parentNode: document.querySelector('#jitsi-container'),
+            interfaceConfigOverwrite: {
+                // Custom interface configuration if needed
+            },
+        };
+
+        const api = new window.JitsiMeetExternalAPI(domain, options);
+
+        api.addListener('readyToClose', () => {
+            // Handle the end call event and redirect to the dashboard
+            navigate('/dashboard');
+        });
+
+        return () => api.dispose(); // Cleanup on unmount
+    }, [roomName, navigate]);
 
     return (
-        <div>
-            <JitsiMeetComponent roomName={roomName} onMeetingEnd={handleMeetingEnd} />
-        </div>
+        <div id="jitsi-container" style={{ width: '100%', height: '100vh' }}></div>
     );
 }
 

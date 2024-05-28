@@ -1,4 +1,4 @@
-// backend/config/database.js
+//backend\config\database.js
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
@@ -10,10 +10,10 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     dialect: 'postgres',
     port: process.env.DB_PORT,
-    logging: false, // disable SQL queries in logs
+    logging: false,
     dialectOptions: {
-      connectTimeout: 60000 // Extend if i have a slow connection to your DB
-    }
+      connectTimeout: 60000,
+    },
   }
 );
 
