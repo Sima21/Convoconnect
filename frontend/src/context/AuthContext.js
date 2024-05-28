@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     const login = (userData) => {
-        // Here i can Implement login logic
+        // Here i can Implement login logic.
         setUser(userData);
     };
 

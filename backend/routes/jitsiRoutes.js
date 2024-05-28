@@ -9,7 +9,7 @@ router.get('/config', (req, res) => {
             domain: 'localhost',
             muc: 'conference.localhost',
         },
-        bosh: '//localhost:5280/http-bind',  // Replace with your BOSH URL
+        bosh: '//localhost:5280/http-bind', 
         clientNode: 'http://jitsi.org/jitsimeet',
         disableDeepLinking: true,
         toolbarButtons: [
