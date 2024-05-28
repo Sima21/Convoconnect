@@ -1,21 +1,20 @@
 //backend\migrations\20240520153555-add-jitsiRoomId-to-groups.js
 'use strict';
 
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    const tableInfo = await queryInterface.describeTable('Groups');
-    if (!tableInfo.jitsiRoomId) {
-      await queryInterface.addColumn('Groups', 'jitsiRoomId', {
-        type: Sequelize.STRING,
-        allowNull: true,
-      });
-    }
+  async up(queryInterface, Sequelize) {
+    // Add altering commands here.
+    // Example: adding a new column to the 'Groups' table
+    await queryInterface.addColumn('Groups', 'jitsiRoomId', {
+      type: Sequelize.STRING,
+      allowNull: true
+    });
   },
 
-  down: async (queryInterface, Sequelize) => {
-    const tableInfo = await queryInterface.describeTable('Groups');
-    if (tableInfo.jitsiRoomId) {
-      await queryInterface.removeColumn('Groups', 'jitsiRoomId');
-    }
-  },
+  async down(queryInterface, Sequelize) {
+    // Add reverting commands here.
+    // Example: removing the column from the 'Groups' table
+    await queryInterface.removeColumn('Groups', 'jitsiRoomId');
+  }
 };

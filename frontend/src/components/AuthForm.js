@@ -16,9 +16,15 @@ function AuthForm() {
         setError('');
         try {
             const response = isLogin ? await loginUser(userData) : await createUser(userData);
-            console.log(response);
-            setLoading(false);
-            navigate('/dashboard');  // Redirect using navigate
+            
+            if (response.data && response.data.token) {
+                console.log('Token:', response.data.token); // Log the token
+                localStorage.setItem('token', response.data.token); // Store the JWT token
+                localStorage.setItem('username', userData.username); // Store the username for display in the dashboard
+                navigate('/dashboard');  // Redirect to the dashboard
+            } else {
+                throw new Error('Authentication failed, no token provided');
+            }
         } catch (err) {
             setError(err.response ? err.response.data.message : err.message);
         } finally {

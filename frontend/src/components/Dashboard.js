@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 //frontend\src\components\Dashboard.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchGroups, createGroup, deleteGroup, inviteMember, generateMeetLink } from '../api';
-=======
-// frontend/src/components/Dashboard.js
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fetchGroups, createGroup, deleteGroup, inviteMember } from '../api';
->>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
 
 function Dashboard() {
     const [groups, setGroups] = useState([]);
@@ -18,7 +11,6 @@ function Dashboard() {
     const [inviteEmail, setInviteEmail] = useState('');
     const [selectedGroupId, setSelectedGroupId] = useState(null);
     const navigate = useNavigate();
-<<<<<<< HEAD
     const location = useLocation();
     const username = localStorage.getItem('username');
 
@@ -39,22 +31,6 @@ function Dashboard() {
         loadGroups();
     }, [location.search, navigate]);
 
-=======
-    const username = localStorage.getItem('username');
-
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        const user = urlParams.get('username');
-        if (token) {
-            localStorage.setItem('token', token);
-            localStorage.setItem('username', user);
-            window.history.replaceState(null, null, '/dashboard');
-        }
-        loadGroups();
-    }, []);
-
->>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
     const loadGroups = async () => {
         setLoading(true);
         setError('');
@@ -118,7 +94,6 @@ function Dashboard() {
         }
     };
 
-<<<<<<< HEAD
     const handleGenerateMeetLink = async (groupId) => {
         try {
             const response = await generateMeetLink(groupId);
@@ -136,10 +111,6 @@ function Dashboard() {
     const handleJoinMeeting = (meetLink) => {
         const roomName = meetLink.replace('https://localhost:8443/', '');
         navigate(`/jitsi/${roomName}`);
-=======
-    const handleJoinMeeting = (roomName) => {
-        navigate(`/meet/${roomName}`);
->>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
     };
 
     const logout = () => {
@@ -171,7 +142,6 @@ function Dashboard() {
                         <li key={group.id}>
                             {group.name} -
                             <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
-<<<<<<< HEAD
                             <button onClick={() => handleGenerateMeetLink(group.id)}>Generate Meet Link</button>
                             {group.meetLink && (
                                 <div>
@@ -179,9 +149,6 @@ function Dashboard() {
                                     <p>{group.meetLink}</p>
                                 </div>
                             )}
-=======
-                            <button onClick={() => handleJoinMeeting(group.name)}>Join Meeting</button>
->>>>>>> ab7617cc7a846cd5bf26e7e2278ad7529c022dfe
                             <input
                                 type="email"
                                 placeholder="Enter member email"
