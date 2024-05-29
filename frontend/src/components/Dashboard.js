@@ -109,8 +109,7 @@ function Dashboard() {
     };
 
     const handleJoinMeeting = (meetLink) => {
-        const roomName = meetLink.replace('https://localhost:8443/', '');
-        navigate(`/jitsi/${roomName}`);
+        window.location.href = meetLink; // Redirect to the external Jitsi Meet URL
     };
 
     const logout = () => {
