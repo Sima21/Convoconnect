@@ -1,0 +1,60 @@
+/* frontend/src/components/Dashboard.css */
+
+.dashboard-container {
+    background: linear-gradient(to right, #4d8ff4, #4da1f4, #4dbdf4, #4ddbf4, #4ddbf4, #4dbdf4, #4da1f4, #4d8ff4); /* Schöne Hintergrundfarben */
+    padding: 20px;
+    min-height: 100vh; /* Volle Höhe des Bildschirms */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dashboard-header {
+    text-align: center;
+    color: white;
+}
+
+.dashboard-content {
+    flex: 1;
+}
+
+.dashboard-footer {
+    text-align: right; /* Rechts ausrichten */
+}
+
+button, input {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+input {
+    width: calc(100% - 20px); /* Vollständige Breite des Containers mit Randabstand */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: rgba(255, 255, 255, 0.8);
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+li button {
+    margin-left: 10px;
+}

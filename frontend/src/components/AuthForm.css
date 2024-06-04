@@ -1,0 +1,40 @@
+/* frontend/src/components/AuthForm.css */
+
+.auth-container {
+    background: linear-gradient(to right, #4d8ff4, #4da1f4, #4dbdf4, #4ddbf4, #4ddbf4, #4dbdf4, #4da1f4, #4d8ff4); /* Schöne Hintergrundfarben */
+    min-height: 100vh; /* Volle Höhe des Bildschirms */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px; /* Breite des Containers */
+    margin-top: 50px; /* Abstand vom oberen Rand */
+}
+
+.auth-form input,
+.auth-form button {
+    display: block;
+    width: calc(100% - 20px); /* Vollständige Breite des Containers mit Randabstand */
+    margin: 10px auto; /* Zentriert die Eingabefelder und Schaltflächen */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.auth-form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.auth-form button:hover {
+    background-color: #45a049;
+}

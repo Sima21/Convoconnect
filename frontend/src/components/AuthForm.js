@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { createUser, loginUser } from '../api';
 import { useNavigate } from 'react-router-dom';
+import './AuthForm.css'; // Importieren der CSS-Datei
 
 function AuthForm() {
     const [isLogin, setIsLogin] = useState(true);
@@ -41,30 +42,32 @@ function AuthForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Username:
-                <input type="text" name="username" value={userData.username} onChange={handleChange} required />
-            </label>
-            {!isLogin && (
+        <div className="auth-container">
+            <form className="auth-form" onSubmit={handleSubmit}>
                 <label>
-                    Email:
-                    <input type="email" name="email" value={userData.email} onChange={handleChange} required />
+                    Username:
+                    <input type="text" name="username" value={userData.username} onChange={handleChange} required />
                 </label>
-            )}
-            <label>
-                Password:
-                <input type="password" name="password" value={userData.password} onChange={handleChange} required />
-            </label>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <button type="submit" disabled={loading}>{isLogin ? 'Login' : 'Register'}</button>
-            <button type="button" onClick={() => setIsLogin(!isLogin)}>
-                {isLogin ? 'Need to register?' : 'Already have an account?'}
-            </button>
-            <button type="button" onClick={handleGoogleLogin}>
-                Login with Google
-            </button>
-        </form>
+                {!isLogin && (
+                    <label>
+                        Email:
+                        <input type="email" name="email" value={userData.email} onChange={handleChange} required />
+                    </label>
+                )}
+                <label>
+                    Password:
+                    <input type="password" name="password" value={userData.password} onChange={handleChange} required />
+                </label>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <button type="submit" disabled={loading}>{isLogin ? 'Login' : 'Register'}</button>
+                <button type="button" onClick={() => setIsLogin(!isLogin)}>
+                    {isLogin ? 'Need to register?' : 'Already have an account?'}
+                </button>
+                <button type="button" onClick={handleGoogleLogin}>
+                    Login with Google
+                </button>
+            </form>
+        </div>
     );
 }
 
