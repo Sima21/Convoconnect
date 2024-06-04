@@ -1,4 +1,3 @@
-//frontend\src\components\JoinGroup.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { joinGroup } from '../api';

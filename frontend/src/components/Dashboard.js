@@ -1,4 +1,3 @@
-//frontend\src\components\Dashboard.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchGroups, createGroup, deleteGroup, inviteMember, generateMeetLink } from '../api';
@@ -109,7 +108,8 @@ function Dashboard() {
     };
 
     const handleJoinMeeting = (meetLink) => {
-        window.location.href = meetLink; // Redirect to the external Jitsi Meet URL
+        const roomName = meetLink.replace('https://localhost:8443/', '');
+        navigate(`/jitsi/${roomName}`);
     };
 
     const logout = () => {

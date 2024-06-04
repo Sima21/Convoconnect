@@ -1,4 +1,3 @@
-//frontend\src\components\JitsiMeetComponent.js
 import React, { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 

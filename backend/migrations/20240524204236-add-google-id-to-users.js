@@ -1,4 +1,3 @@
-//backend\migrations\20240524204236-add-google-id-to-users.js
 'use strict';
 
 module.exports = {

@@ -1,4 +1,3 @@
-//frontend\src\components\CreateGroup.js
 import React, { useState } from 'react';
 import { createGroup } from '../api'; 
 
