@@ -1,3 +1,4 @@
+//backend\routes\groupRoutes.js
 const express = require('express');
 const nodemailer = require('nodemailer');
 const Group = require('../models/group');
@@ -29,7 +30,7 @@ router.post('/:groupId/generate-meet', protect, async (req, res) => {
         // Use the user's email to generate the meet link
         const userEmail = req.user.email;
         const sanitizedEmail = userEmail.replace(/[^a-zA-Z0-9]/g, '-'); // Sanitize email for URL
-        const meetLink = `https://localhost:8443/${sanitizedEmail}-${Date.now()}`;
+        const meetLink = `https://localhost:8443/jitsi/${sanitizedEmail}-${Date.now()}`;
         
         group.meetLink = meetLink;
         await group.save();
