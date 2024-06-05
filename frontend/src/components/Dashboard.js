@@ -1,7 +1,8 @@
-//frontend\src\components\Dashboard.js
+// frontend/src/components/Dashboard.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchGroups, createGroup, deleteGroup, inviteMember, generateMeetLink } from '../api';
+import './Dashboard.css'; // Importieren der CSS-Datei
 
 function Dashboard() {
     const [groups, setGroups] = useState([]);
@@ -119,51 +120,59 @@ function Dashboard() {
     };
 
     return (
-        <div>
-            <h1>Welcome to <span style={{ textDecoration: 'underline' }}>{username || "User"}</span>'s Dashboard</h1>
-            <button onClick={logout}>Logout</button>
-            <div>
-                <input
-                    type="text"
-                    value={groupName}
-                    onChange={e => setGroupName(e.target.value)}
-                    placeholder="Enter new group name"
-                />
-                <button onClick={() => handleCreateGroup(groupName)}>Create Group</button>
+        <div className="dashboard-container">
+            <div className="dashboard-header">
+                <h1>Welcome to <span style={{ textDecoration: 'underline' }}>{username || "User"}</span>'s Dashboard</h1>
+                <button onClick={logout}>Logout</button>
             </div>
-            {loading ? (
-                <p>Loading groups...</p>
-            ) : error ? (
-                <p style={{ color: 'red' }}>{error}</p>
-            ) : groups.length > 0 ? (
-                <ul>
-                    {groups.map(group => (
-                        <li key={group.id}>
-                            {group.name} -
-                            <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
-                            <button onClick={() => handleGenerateMeetLink(group.id)}>Generate Meet Link</button>
-                            {group.meetLink && (
-                                <div>
-                                    <button onClick={() => handleJoinMeeting(group.meetLink)}>Join Meeting</button>
-                                    <p>{group.meetLink}</p>
-                                </div>
-                            )}
-                            <input
-                                type="email"
-                                placeholder="Enter member email"
-                                value={selectedGroupId === group.id ? inviteEmail : ''}
-                                onChange={e => {
-                                    setInviteEmail(e.target.value);
-                                    setSelectedGroupId(group.id);
-                                }}
-                            />
-                            <button onClick={() => handleInviteMember(group.id, inviteEmail)}>Invite Member</button>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>You have no group yet! Click on Create Group</p>
-            )}
+            <div className="dashboard-content">
+                <div className="input-container">
+                    <input
+                        type="text"
+                        placeholder="Enter new group name"
+                        value={groupName}
+                        onChange={e => setGroupName(e.target.value)}
+                    />
+                    <button className="create-group-button" onClick={() => handleCreateGroup(groupName)}>Create Group</button>
+                </div>
+                <div className="dashboard-content-inner">
+                    {loading ? (
+                        <p>Loading groups...</p>
+                    ) : error ? (
+                        <p style={{ color: 'red' }}>{error}</p>
+                    ) : groups.length > 0 ? (
+                        <ul>
+                            {groups.map(group => (
+                                <li key={group.id}>
+                                    {group.name} -
+                                    <div className="button-container">
+                                        <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
+                                        <button onClick={() => handleGenerateMeetLink(group.id)}>Generate Meet Link</button>
+                                        {group.meetLink && (
+                                            <div>
+                                                <button onClick={() => handleJoinMeeting(group.meetLink)}>Join Meeting</button>
+                                                <p>{group.meetLink}</p>
+                                            </div>
+                                        )}
+                                        <input
+                                            type="email"
+                                            placeholder="Enter member email"
+                                            value={selectedGroupId === group.id ? inviteEmail : ''}
+                                            onChange={e => {
+                                                setInviteEmail(e.target.value);
+                                                setSelectedGroupId(group.id);
+                                            }}
+                                        />
+                                        <button onClick={() => handleInviteMember(group.id, inviteEmail)}>Invite Member</button>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>You have no group yet! Click on Create Group</p>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }
