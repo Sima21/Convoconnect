@@ -27,9 +27,8 @@ router.post('/:groupId/generate-meet', protect, async (req, res) => {
             return res.status(404).json({ error: 'Group not found or not owned by user' });
         }
 
-        // Use the user's email to generate the meet link
         const userEmail = req.user.email;
-        const sanitizedEmail = userEmail.replace(/[^a-zA-Z0-9]/g, '-'); // Sanitize email for URL
+        const sanitizedEmail = userEmail.replace(/[^a-zA-Z0-9]/g, '-');
         const meetLink = `https://localhost:8443/jitsi/${sanitizedEmail}-${Date.now()}`;
         
         group.meetLink = meetLink;
@@ -95,6 +94,15 @@ router.post('/:groupId/invite', protect, async (req, res) => {
             return res.status(404).json({ error: 'Group not found or not owned by user' });
         }
 
+        // Ensure the group has a meet link
+        if (!group.meetLink) {
+            const userEmail = req.user.email;
+            const sanitizedEmail = userEmail.replace(/[^a-zA-Z0-9]/g, '-');
+            const meetLink = `https://localhost:8443/jitsi/${sanitizedEmail}-${Date.now()}`;
+            group.meetLink = meetLink;
+            await group.save();
+        }
+
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
@@ -110,8 +118,8 @@ router.post('/:groupId/invite', protect, async (req, res) => {
             html: `
                 <h2>Hello,</h2>
                 <p>You have been invited by <strong>${senderUsername} (${senderEmail})</strong> to join the group "<strong>${group.name}</strong>".</p>
-                <p>Click the button below to join us:</p>
-                <p><a href="http://localhost:3000/join/${group.id}" style="padding: 10px 20px; color: white; background-color: blue; text-decoration: none;">Join Group</a></p>
+                <p>Click the link below to join the meeting:</p>
+                <p><a href="${group.meetLink}" style="padding: 10px 20px; color: white; background-color: blue; text-decoration: none;">Join Meeting</a></p>
                 <p>Looking forward to seeing you!</p>
                 <p>Best regards,<br/>The Team</p>
             `
@@ -135,8 +143,10 @@ router.post('/join/:groupId', protect, async (req, res) => {
             return res.status(404).json({ error: 'Group not found' });
         }
 
-        // Add user to group
-        await UserGroup.create({ userId, groupId });
+        const userGroup = await UserGroup.findOne({ where: { userId, groupId } });
+        if (!userGroup) {
+            await UserGroup.create({ userId, groupId });
+        }
 
         res.status(200).json({ message: 'Joined group successfully', meetLink: group.meetLink });
     } catch (error) {
