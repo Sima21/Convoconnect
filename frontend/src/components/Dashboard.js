@@ -11,6 +11,7 @@ function Dashboard() {
     const [email, setEmail] = useState('');
     const [selectedGroupId, setSelectedGroupId] = useState(null);
     const [action, setAction] = useState('invite');
+    const [meetLinks, setMeetLinks] = useState({});
     const navigate = useNavigate();
     const location = useLocation();
     const username = localStorage.getItem('username');
@@ -42,6 +43,13 @@ function Dashboard() {
             const response = await fetchGroups();
             if (response.status === 200) {
                 setGroups(response.data.groups || []);
+                const links = response.data.groups.reduce((acc, group) => {
+                    if (group.meetLink) {
+                        acc[group.id] = group.meetLink;
+                    }
+                    return acc;
+                }, {});
+                setMeetLinks(links);
             } else {
                 throw new Error(response.statusText);
             }
@@ -114,6 +122,7 @@ function Dashboard() {
         try {
             const response = await generateMeetLink(groupId);
             if (response.status === 200) {
+                setMeetLinks(prevLinks => ({ ...prevLinks, [groupId]: response.data.meetLink }));
                 loadGroups();
             } else {
                 throw new Error(response.statusText);
@@ -174,9 +183,9 @@ function Dashboard() {
                                             <>
                                                 <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
                                                 <button onClick={() => handleGenerateMeetLink(group.id)}>Generate Meet Link</button>
-                                                {group.meetLink && (
+                                                {meetLinks[group.id] && (
                                                     <div>
-                                                        <p>{group.meetLink}</p>
+                                                        <button onClick={() => handleJoinMeeting(meetLinks[group.id])}>Go to Meet</button>
                                                     </div>
                                                 )}
                                                 <input
@@ -198,9 +207,9 @@ function Dashboard() {
                                                 <button onClick={() => handleAction(group.id, email, action)}>Submit</button>
                                             </>
                                         ) : (
-                                            group.meetLink && (
+                                            meetLinks[group.id] && (
                                                 <>
-                                                    <button onClick={() => handleJoinMeeting(group.meetLink)}>Join Meeting</button>
+                                                    <button onClick={() => handleJoinMeeting(meetLinks[group.id])}>Go to Meet</button>
                                                 </>
                                             )
                                         )}
