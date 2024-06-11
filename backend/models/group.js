@@ -18,6 +18,11 @@ const Group = sequelize.define('Group', {
     meetLink: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    sharedWith: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER), // Store shared user IDs as an array
+        allowNull: true,
+        defaultValue: []
     }
 });
 
