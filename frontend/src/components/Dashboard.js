@@ -1,8 +1,7 @@
-// frontend/src/components/Dashboard.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchGroups, createGroup, deleteGroup, inviteMember, generateMeetLink } from '../api';
-import './Dashboard.css'; // Importieren der CSS-Datei
+import './Dashboard.css';
 
 function Dashboard() {
     const [groups, setGroups] = useState([]);
@@ -25,7 +24,6 @@ function Dashboard() {
             if (usernameFromParams) {
                 localStorage.setItem('username', usernameFromParams);
             }
-
             navigate('/dashboard', { replace: true });
         }
 
@@ -43,7 +41,6 @@ function Dashboard() {
                 throw new Error(response.statusText);
             }
         } catch (err) {
-            console.error('Error fetching groups:', err);
             setError(`Failed to fetch groups: ${err.message}`);
         } finally {
             setLoading(false);
@@ -60,7 +57,6 @@ function Dashboard() {
                 throw new Error(response.statusText);
             }
         } catch (err) {
-            console.error('Failed to create group:', err);
             setError('Failed to create group');
         }
     };
@@ -74,7 +70,6 @@ function Dashboard() {
                 throw new Error('Failed to delete group');
             }
         } catch (err) {
-            console.error('Error deleting group:', err);
             setError(`Failed to delete group: ${err.message}`);
         }
     };
@@ -90,7 +85,6 @@ function Dashboard() {
                 throw new Error(response.statusText);
             }
         } catch (err) {
-            console.error('Failed to send invitation:', err);
             setError('Failed to send invitation');
         }
     };
@@ -104,7 +98,6 @@ function Dashboard() {
                 throw new Error(response.statusText);
             }
         } catch (err) {
-            console.error('Failed to generate meet link:', err);
             setError('Failed to generate meet link');
         }
     };

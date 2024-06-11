@@ -1,8 +1,7 @@
-// frontend/src/components/AuthForm.js
 import React, { useState } from 'react';
 import { createUser, loginUser } from '../api';
 import { useNavigate } from 'react-router-dom';
-import './AuthForm.css'; // Importieren der CSS-Datei
+import './AuthForm.css';
 
 function AuthForm() {
     const [isLogin, setIsLogin] = useState(true);
@@ -17,12 +16,10 @@ function AuthForm() {
         setError('');
         try {
             const response = isLogin ? await loginUser(userData) : await createUser(userData);
-            
             if (response.data && response.data.token) {
-                console.log('Token:', response.data.token); // Log the token
-                localStorage.setItem('token', response.data.token); // Store the JWT token
-                localStorage.setItem('username', userData.username); // Store the username for display in the dashboard
-                navigate('/dashboard');  // Redirect to the dashboard
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('username', response.data.username || userData.username);
+                navigate('/dashboard');
             } else {
                 throw new Error('Authentication failed, no token provided');
             }
@@ -38,7 +35,7 @@ function AuthForm() {
     };
 
     const handleGoogleLogin = () => {
-        window.location.href = 'http://localhost:5000/api/auth/google';
+        window.location.href = process.env.REACT_APP_GOOGLE_AUTH_URL || 'http://localhost:5000/api/auth/google';
     };
 
     return (
