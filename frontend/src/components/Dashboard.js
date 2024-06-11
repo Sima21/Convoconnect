@@ -8,13 +8,12 @@ function Dashboard() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [groupName, setGroupName] = useState('');
-    const [inviteEmail, setInviteEmail] = useState('');
-    const [shareEmail, setShareEmail] = useState('');
+    const [email, setEmail] = useState('');
     const [selectedGroupId, setSelectedGroupId] = useState(null);
+    const [action, setAction] = useState('invite');
     const navigate = useNavigate();
     const location = useLocation();
     const username = localStorage.getItem('username');
-    const userId = parseInt(localStorage.getItem('userId'));
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -85,7 +84,7 @@ function Dashboard() {
             const response = await inviteMember(groupId, email);
             if (response.status === 200) {
                 alert('Invitation sent successfully');
-                setInviteEmail('');
+                setEmail('');
                 setSelectedGroupId(null);
             } else {
                 throw new Error(response.statusText);
@@ -100,7 +99,7 @@ function Dashboard() {
             const response = await shareGroup(groupId, email);
             if (response.status === 200) {
                 alert('Group shared successfully');
-                setShareEmail('');
+                setEmail('');
                 setSelectedGroupId(null);
                 loadGroups();
             } else {
@@ -126,6 +125,14 @@ function Dashboard() {
 
     const handleJoinMeeting = (meetLink) => {
         window.location.href = meetLink;
+    };
+
+    const handleAction = async (groupId, email, action) => {
+        if (action === 'invite') {
+            await handleInviteMember(groupId, email);
+        } else if (action === 'share') {
+            await handleShareGroup(groupId, email);
+        }
     };
 
     const logout = () => {
@@ -174,24 +181,21 @@ function Dashboard() {
                                                 )}
                                                 <input
                                                     type="email"
-                                                    placeholder="Enter member email"
-                                                    value={selectedGroupId === group.id ? inviteEmail : ''}
+                                                    placeholder="Enter email"
+                                                    value={selectedGroupId === group.id ? email : ''}
                                                     onChange={e => {
-                                                        setInviteEmail(e.target.value);
+                                                        setEmail(e.target.value);
                                                         setSelectedGroupId(group.id);
                                                     }}
                                                 />
-                                                <button onClick={() => handleInviteMember(group.id, inviteEmail)}>Invite Member</button>
-                                                <input
-                                                    type="email"
-                                                    placeholder="Enter email to share"
-                                                    value={selectedGroupId === group.id ? shareEmail : ''}
-                                                    onChange={e => {
-                                                        setShareEmail(e.target.value);
-                                                        setSelectedGroupId(group.id);
-                                                    }}
-                                                />
-                                                <button onClick={() => handleShareGroup(group.id, shareEmail)}>Share Group</button>
+                                                <select
+                                                    value={action}
+                                                    onChange={e => setAction(e.target.value)}
+                                                >
+                                                    <option value="invite">Invite Member</option>
+                                                    <option value="share">Share Group</option>
+                                                </select>
+                                                <button onClick={() => handleAction(group.id, email, action)}>Submit</button>
                                             </>
                                         ) : (
                                             group.meetLink && (

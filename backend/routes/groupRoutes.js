@@ -126,6 +126,12 @@ router.post('/:groupId/invite', protect, async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
+        // Check if the user is already a member of the group
+        const existingUserGroup = await UserGroup.findOne({ where: { userId: invitedUser.id, groupId: group.id } });
+        if (existingUserGroup) {
+            return res.status(400).json({ error: 'User is already a member of the group' });
+        }
+
         await UserGroup.create({ userId: invitedUser.id, groupId: group.id });
 
         const transporter = nodemailer.createTransport({
