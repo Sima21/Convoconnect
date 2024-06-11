@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { fetchGroups, createGroup, deleteGroup, inviteMember, generateMeetLink } from '../api';
+import { fetchGroups, createGroup, deleteGroup, inviteMember, generateMeetLink, shareGroup } from '../api';
 import './Dashboard.css';
 
 function Dashboard() {
@@ -9,20 +9,26 @@ function Dashboard() {
     const [error, setError] = useState('');
     const [groupName, setGroupName] = useState('');
     const [inviteEmail, setInviteEmail] = useState('');
+    const [shareEmail, setShareEmail] = useState('');
     const [selectedGroupId, setSelectedGroupId] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
     const username = localStorage.getItem('username');
+    const userId = parseInt(localStorage.getItem('userId'));
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const token = params.get('token');
         const usernameFromParams = params.get('username');
+        const userIdFromParams = params.get('userId');
 
         if (token) {
             localStorage.setItem('token', token);
             if (usernameFromParams) {
                 localStorage.setItem('username', usernameFromParams);
+            }
+            if (userIdFromParams) {
+                localStorage.setItem('userId', userIdFromParams);
             }
             navigate('/dashboard', { replace: true });
         }
@@ -89,6 +95,22 @@ function Dashboard() {
         }
     };
 
+    const handleShareGroup = async (groupId, email) => {
+        try {
+            const response = await shareGroup(groupId, email);
+            if (response.status === 200) {
+                alert('Group shared successfully');
+                setShareEmail('');
+                setSelectedGroupId(null);
+                loadGroups();
+            } else {
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            setError('Failed to share group');
+        }
+    };
+
     const handleGenerateMeetLink = async (groupId) => {
         try {
             const response = await generateMeetLink(groupId);
@@ -109,6 +131,7 @@ function Dashboard() {
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
+        localStorage.removeItem('userId');
         navigate('/');
     };
 
@@ -137,26 +160,46 @@ function Dashboard() {
                         <ul>
                             {groups.map(group => (
                                 <li key={group.id}>
-                                    {group.name} -
+                                    {group.name}
+                                    {group.isOwner ? '' : ` - Shared by ${group.ownerDetails ? group.ownerDetails.username : 'Unknown'}`}
                                     <div className="button-container">
-                                        <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
-                                        <button onClick={() => handleGenerateMeetLink(group.id)}>Generate Meet Link</button>
-                                        {group.meetLink && (
-                                            <div>
-                                                <button onClick={() => handleJoinMeeting(group.meetLink)}>Join Meeting</button>
-                                                <p>{group.meetLink}</p>
-                                            </div>
+                                        {group.isOwner ? (
+                                            <>
+                                                <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
+                                                <button onClick={() => handleGenerateMeetLink(group.id)}>Generate Meet Link</button>
+                                                {group.meetLink && (
+                                                    <div>
+                                                        <p>{group.meetLink}</p>
+                                                    </div>
+                                                )}
+                                                <input
+                                                    type="email"
+                                                    placeholder="Enter member email"
+                                                    value={selectedGroupId === group.id ? inviteEmail : ''}
+                                                    onChange={e => {
+                                                        setInviteEmail(e.target.value);
+                                                        setSelectedGroupId(group.id);
+                                                    }}
+                                                />
+                                                <button onClick={() => handleInviteMember(group.id, inviteEmail)}>Invite Member</button>
+                                                <input
+                                                    type="email"
+                                                    placeholder="Enter email to share"
+                                                    value={selectedGroupId === group.id ? shareEmail : ''}
+                                                    onChange={e => {
+                                                        setShareEmail(e.target.value);
+                                                        setSelectedGroupId(group.id);
+                                                    }}
+                                                />
+                                                <button onClick={() => handleShareGroup(group.id, shareEmail)}>Share Group</button>
+                                            </>
+                                        ) : (
+                                            group.meetLink && (
+                                                <>
+                                                    <button onClick={() => handleJoinMeeting(group.meetLink)}>Join Meeting</button>
+                                                </>
+                                            )
                                         )}
-                                        <input
-                                            type="email"
-                                            placeholder="Enter member email"
-                                            value={selectedGroupId === group.id ? inviteEmail : ''}
-                                            onChange={e => {
-                                                setInviteEmail(e.target.value);
-                                                setSelectedGroupId(group.id);
-                                            }}
-                                        />
-                                        <button onClick={() => handleInviteMember(group.id, inviteEmail)}>Invite Member</button>
                                     </div>
                                 </li>
                             ))}

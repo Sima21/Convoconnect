@@ -22,3 +22,4 @@ export const deleteGroup = (groupId) => API.delete(`/groups/${groupId}`);
 export const inviteMember = (groupId, email) => API.post(`/groups/${groupId}/invite`, { email });
 export const generateMeetLink = (groupId) => API.post(`/groups/${groupId}/generate-meet`);
 export const joinGroup = (token) => API.post(`/groups/join/${token}`);
+export const shareGroup = (groupId, email) => API.post(`/groups/${groupId}/share`, { email });
