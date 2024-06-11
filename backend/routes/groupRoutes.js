@@ -150,7 +150,7 @@ router.post('/:groupId/invite', protect, async (req, res) => {
                 <h2>Hello,</h2>
                 <p>You have been invited by <strong>${senderUsername} (${senderEmail})</strong> to join the group "<strong>${group.name}</strong>".</p>
                 <p>Click the link below to join the meeting:</p>
-                <p><a href="${group.meetLink}" style="padding: 10px 20px; color: white; background-color: blue; text-decoration: none;">Join Meeting</a></p>
+                <p><a href="http://localhost:3000" style="padding: 10px 20px; color: white; background-color: blue; text-decoration: none;">Join Meeting</a></p>
                 <p>Looking forward to seeing you!</p>
                 <p>Best regards,<br/>The Team</p>
             `

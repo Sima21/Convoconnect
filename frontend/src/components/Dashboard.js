@@ -176,8 +176,8 @@ function Dashboard() {
                         <ul>
                             {groups.map(group => (
                                 <li key={group.id}>
-                                    {group.name}
-                                    {group.isOwner ? '' : ` - Shared by ${group.ownerDetails ? group.ownerDetails.username : 'Unknown'}`}
+                                    <strong>Group Name:</strong> {group.name}
+                                    {group.isOwner ? '' : ` - ( Shared by:  ${group.ownerDetails ? group.ownerDetails.username : 'Unknown'} )`}
                                     <div className="button-container">
                                         {group.isOwner ? (
                                             <>
