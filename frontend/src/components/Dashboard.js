@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { fetchGroups, createGroup, deleteGroup, inviteMember, generateMeetLink } from '../api';
+import { fetchGroups, createGroup, deleteGroup, inviteMember, generateMeetLink, shareGroup } from '../api';
 import './Dashboard.css';
 
 function Dashboard() {
@@ -8,8 +8,10 @@ function Dashboard() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [groupName, setGroupName] = useState('');
-    const [inviteEmail, setInviteEmail] = useState('');
+    const [email, setEmail] = useState('');
     const [selectedGroupId, setSelectedGroupId] = useState(null);
+    const [action, setAction] = useState('invite');
+    const [meetLinks, setMeetLinks] = useState({});
     const navigate = useNavigate();
     const location = useLocation();
     const username = localStorage.getItem('username');
@@ -18,11 +20,15 @@ function Dashboard() {
         const params = new URLSearchParams(location.search);
         const token = params.get('token');
         const usernameFromParams = params.get('username');
+        const userIdFromParams = params.get('userId');
 
         if (token) {
             localStorage.setItem('token', token);
             if (usernameFromParams) {
                 localStorage.setItem('username', usernameFromParams);
+            }
+            if (userIdFromParams) {
+                localStorage.setItem('userId', userIdFromParams);
             }
             navigate('/dashboard', { replace: true });
         }
@@ -37,6 +43,13 @@ function Dashboard() {
             const response = await fetchGroups();
             if (response.status === 200) {
                 setGroups(response.data.groups || []);
+                const links = response.data.groups.reduce((acc, group) => {
+                    if (group.meetLink) {
+                        acc[group.id] = group.meetLink;
+                    }
+                    return acc;
+                }, {});
+                setMeetLinks(links);
             } else {
                 throw new Error(response.statusText);
             }
@@ -79,7 +92,7 @@ function Dashboard() {
             const response = await inviteMember(groupId, email);
             if (response.status === 200) {
                 alert('Invitation sent successfully');
-                setInviteEmail('');
+                setEmail('');
                 setSelectedGroupId(null);
             } else {
                 throw new Error(response.statusText);
@@ -89,10 +102,27 @@ function Dashboard() {
         }
     };
 
+    const handleShareGroup = async (groupId, email) => {
+        try {
+            const response = await shareGroup(groupId, email);
+            if (response.status === 200) {
+                alert('Group shared successfully');
+                setEmail('');
+                setSelectedGroupId(null);
+                loadGroups();
+            } else {
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            setError('Failed to share group');
+        }
+    };
+
     const handleGenerateMeetLink = async (groupId) => {
         try {
             const response = await generateMeetLink(groupId);
             if (response.status === 200) {
+                setMeetLinks(prevLinks => ({ ...prevLinks, [groupId]: response.data.meetLink }));
                 loadGroups();
             } else {
                 throw new Error(response.statusText);
@@ -106,9 +136,18 @@ function Dashboard() {
         window.location.href = meetLink;
     };
 
+    const handleAction = async (groupId, email, action) => {
+        if (action === 'invite') {
+            await handleInviteMember(groupId, email);
+        } else if (action === 'share') {
+            await handleShareGroup(groupId, email);
+        }
+    };
+
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
+        localStorage.removeItem('userId');
         navigate('/');
     };
 
@@ -137,26 +176,43 @@ function Dashboard() {
                         <ul>
                             {groups.map(group => (
                                 <li key={group.id}>
-                                    {group.name} -
+                                    <strong>Group Name:</strong> {group.name}
+                                    {group.isOwner ? '' : ` - ( Shared by:  ${group.ownerDetails ? group.ownerDetails.username : 'Unknown'} )`}
                                     <div className="button-container">
-                                        <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
-                                        <button onClick={() => handleGenerateMeetLink(group.id)}>Generate Meet Link</button>
-                                        {group.meetLink && (
-                                            <div>
-                                                <button onClick={() => handleJoinMeeting(group.meetLink)}>Join Meeting</button>
-                                                <p>{group.meetLink}</p>
-                                            </div>
+                                        {group.isOwner ? (
+                                            <>
+                                                <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
+                                                <button onClick={() => handleGenerateMeetLink(group.id)}>Generate Meet Link</button>
+                                                {meetLinks[group.id] && (
+                                                    <div>
+                                                        <button onClick={() => handleJoinMeeting(meetLinks[group.id])}>Go to Meet</button>
+                                                    </div>
+                                                )}
+                                                <input
+                                                    type="email"
+                                                    placeholder="Enter email"
+                                                    value={selectedGroupId === group.id ? email : ''}
+                                                    onChange={e => {
+                                                        setEmail(e.target.value);
+                                                        setSelectedGroupId(group.id);
+                                                    }}
+                                                />
+                                                <select
+                                                    value={action}
+                                                    onChange={e => setAction(e.target.value)}
+                                                >
+                                                    <option value="invite">Invite Member</option>
+                                                    <option value="share">Share Group</option>
+                                                </select>
+                                                <button onClick={() => handleAction(group.id, email, action)}>Submit</button>
+                                            </>
+                                        ) : (
+                                            meetLinks[group.id] && (
+                                                <>
+                                                    <button onClick={() => handleJoinMeeting(meetLinks[group.id])}>Go to Meet</button>
+                                                </>
+                                            )
                                         )}
-                                        <input
-                                            type="email"
-                                            placeholder="Enter member email"
-                                            value={selectedGroupId === group.id ? inviteEmail : ''}
-                                            onChange={e => {
-                                                setInviteEmail(e.target.value);
-                                                setSelectedGroupId(group.id);
-                                            }}
-                                        />
-                                        <button onClick={() => handleInviteMember(group.id, inviteEmail)}>Invite Member</button>
                                     </div>
                                 </li>
                             ))}
