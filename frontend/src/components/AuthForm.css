@@ -1,11 +1,12 @@
 /* frontend/src/components/AuthForm.css */
 
 .auth-container {
-    background: linear-gradient(to right, #4d8ff4, #4da1f4, #4dbdf4, #4ddbf4, #4ddbf4, #4dbdf4, #4da1f4, #4d8ff4); /* Schöne Hintergrundfarben */
-    min-height: 100vh; /* Volle Höhe des Bildschirms */
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), #4d8ff4, #4da1f4, #4dbdf4, #4ddbf4);
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background 0.1s;
 }
 
 .auth-form {
@@ -14,27 +15,81 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px; /* Breite des Containers */
-    margin-top: 50px; /* Abstand vom oberen Rand */
+    width: 300px;
+    margin-top: 50px;
 }
 
 .auth-form input,
 .auth-form button {
     display: block;
-    width: calc(100% - 20px); /* Vollständige Breite des Containers mit Randabstand */
-    margin: 10px auto; /* Zentriert die Eingabefelder und Schaltflächen */
+    width: calc(100% - 20px);
+    margin: 10px auto;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-.auth-form button {
-    background-color: #4CAF50;
-    color: white;
+.auth-button {
     border: none;
     cursor: pointer;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    transition: transform 0.1s ease-in-out;
 }
 
-.auth-form button:hover {
-    background-color: #45a049;
+.auth-button-login {
+    background: linear-gradient(135deg, #7f5af0, #3d5af0);
+}
+
+.auth-button-toggle {
+    background: linear-gradient(135deg, #ff5c5c, #ff2d2d);
+}
+
+.auth-button-google {
+    background: linear-gradient(135deg, #3bb78f, #0bab64);
+}
+
+.auth-container {
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), #4d8ff4, #4da1f4, #4dbdf4, #4ddbf4);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.1s;
+}
+
+.auth-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    margin-top: 50px;
+}
+
+.auth-form input,
+.auth-form button {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.auth-button {
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    transition: transform 0.1s ease-in-out;
 }

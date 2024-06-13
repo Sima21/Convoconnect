@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchGroups, createGroup, deleteGroup, inviteMember, generateMeetLink, shareGroup } from '../api';
+import bubbleStyles from './BubbleText.module.css'; // Correct import
+import buttonStyles from './Button.module.css';
 import './Dashboard.css';
 
 function Dashboard() {
@@ -15,6 +17,20 @@ function Dashboard() {
     const navigate = useNavigate();
     const location = useLocation();
     const username = localStorage.getItem('username');
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            const { clientX, clientY } = e;
+            const moveX = (clientX / window.innerWidth) * 100;
+            const moveY = (clientY / window.innerHeight) * 100;
+            document.documentElement.style.setProperty('--mouse-x', `${moveX}%`);
+            document.documentElement.style.setProperty('--mouse-y', `${moveY}%`);
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, []);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -154,8 +170,25 @@ function Dashboard() {
     return (
         <div className="dashboard-container">
             <div className="dashboard-header">
-                <h1>Welcome to <span style={{ textDecoration: 'underline' }}>{username || "User"}</span>'s Dashboard</h1>
-                <button onClick={logout}>Logout</button>
+                <h1 className="bubble-text">
+                    {"Welcome to ".split("").map((char, idx) => (
+                        <span className={bubbleStyles.hoverText} key={idx}>{char}</span>
+                    ))}
+                    <span style={{ textDecoration: 'underline', marginLeft: '5px', marginRight: '5px' }}>
+                        {username || "User"}
+                    </span>
+                    {"'s Dashboard".split("").map((char, idx) => (
+                        <span className={bubbleStyles.hoverText} key={idx + 100}>{char}</span>
+                    ))}
+                </h1>
+
+                <button className={buttonStyles.button} onClick={logout}>
+                    <span>Logout</span>
+                    <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
+                    <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
+                    <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
+                    <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
+                </button>
             </div>
             <div className="dashboard-content">
                 <div className="input-container">
@@ -165,7 +198,13 @@ function Dashboard() {
                         value={groupName}
                         onChange={e => setGroupName(e.target.value)}
                     />
-                    <button className="create-group-button" onClick={() => handleCreateGroup(groupName)}>Create Group</button>
+                    <button className={`${buttonStyles.button} create-group-button`} onClick={() => handleCreateGroup(groupName)}>
+                        <span>Create Group</span>
+                        <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
+                        <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
+                        <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
+                        <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
+                    </button>
                 </div>
                 <div className="dashboard-content-inner">
                     {loading ? (
@@ -181,11 +220,29 @@ function Dashboard() {
                                     <div className="button-container">
                                         {group.isOwner ? (
                                             <>
-                                                <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
-                                                <button onClick={() => handleGenerateMeetLink(group.id)}>Generate Meet Link</button>
+                                                <button className={buttonStyles.button} onClick={() => handleDeleteGroup(group.id)}>
+                                                    <span>Delete Group</span>
+                                                    <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
+                                                    <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
+                                                    <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
+                                                    <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
+                                                </button>
+                                                <button className={buttonStyles.button} onClick={() => handleGenerateMeetLink(group.id)}>
+                                                    <span>Generate Meet Link</span>
+                                                    <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
+                                                    <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
+                                                    <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
+                                                    <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
+                                                </button>
                                                 {meetLinks[group.id] && (
                                                     <div>
-                                                        <button onClick={() => handleJoinMeeting(meetLinks[group.id])}>Go to Meet</button>
+                                                        <button className={buttonStyles.button} onClick={() => handleJoinMeeting(meetLinks[group.id])}>
+                                                            <span>Go to Meet</span>
+                                                            <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
+                                                            <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
+                                                            <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
+                                                            <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
+                                                        </button>
                                                     </div>
                                                 )}
                                                 <input
@@ -204,13 +261,23 @@ function Dashboard() {
                                                     <option value="invite">Invite Member</option>
                                                     <option value="share">Share Group</option>
                                                 </select>
-                                                <button onClick={() => handleAction(group.id, email, action)}>Submit</button>
+                                                <button className={buttonStyles.button} onClick={() => handleAction(group.id, email, action)}>
+                                                    <span>Submit</span>
+                                                    <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
+                                                    <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
+                                                    <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
+                                                    <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
+                                                </button>
                                             </>
                                         ) : (
                                             meetLinks[group.id] && (
-                                                <>
-                                                    <button onClick={() => handleJoinMeeting(meetLinks[group.id])}>Go to Meet</button>
-                                                </>
+                                                <button className={buttonStyles.button} onClick={() => handleJoinMeeting(meetLinks[group.id])}>
+                                                    <span>Go to Meet</span>
+                                                    <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
+                                                    <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
+                                                    <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
+                                                    <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
+                                                </button>
                                             )
                                         )}
                                     </div>

@@ -1,9 +1,11 @@
 /* frontend/src/components/Dashboard.css */
 
 .dashboard-container {
-    background: linear-gradient(to right, #4d8ff4, #4da1f4, #4dbdf4, #4ddbf4, #4ddbf4, #4dbdf4, #4da1f4, #4d8ff4); /* Schöne Hintergrundfarben */
+    background: linear-gradient(to right, #224c8c, #3a7ec3, #4dbdf4, #3ebed4, #3abdd4, #4dbdf4, #3a7ec3, #224c8c);
+    /* Beautiful background colors */
     padding: 20px;
-    min-height: 100vh; /* Volle Höhe des Bildschirms */
+    min-height: 100vh;
+    /* Full screen height */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -11,27 +13,43 @@
 
 .dashboard-header {
     display: flex;
-    justify-content: center; /* In der Mitte zentrieren */
+    justify-content: center;
+    /* Centered */
     align-items: center;
-    color: white;
+    color: rgb(15, 14, 26);
 }
 
 .dashboard-header h1 {
-    text-align: center; /* Zentrieren des Titels */
+    text-align: center;
+    /* Center the title */
 }
 
 .dashboard-header button {
-    margin-left: auto; /* Rechtsbündig ausrichten */
-    margin-right: 5px; /* Abstand zum rechten Rand */
-    padding: 8px 15px; /* Größere Polsterung */
-    font-size: 16px; /* Größere Schriftgröße */
+    margin-left: auto;
+    /* Align right */
+    margin-right: 5px;
+    /* Space from right edge */
+    padding: 8px 15px;
+    /* Larger padding */
+    font-size: 16px;
+    /* Larger font size */
+    background-color: #273a58;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dashboard-header button:hover {
+    background-color: #2f2b41;
 }
 
 .dashboard-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Zentrieren von Inhalten */
+    align-items: center;
+    /* Center content */
 }
 
 .input-container {
@@ -39,30 +57,41 @@
     align-items: center;
 }
 
-input, button {
+input,
+button {
     margin: 5px;
-    padding: 15px; /* Größere Polsterung */
+    padding: 15px;
+    /* Larger padding */
     border-radius: 5px;
     border: none;
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #010307;
     color: white;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #273a58;
 }
 
 input[type="text"] {
-    width: calc(60% - 20px); /* 40% weniger breit */
+    width: calc(60% - 20px);
+    /* 60% width minus padding */
 }
 
 .create-group-button {
-    width: 200px; /* Breite des Buttons anpassen */
-    padding: 15px; /* Größere Polsterung */
+    width: 200px;
+    /* Button width */
+    padding: 15px;
+    /* Larger padding */
+    background-color: #273a58;
+    color: white;
+}
+
+.create-group-button:hover {
+    background-color: #867faa;
 }
 
 ul {
@@ -71,16 +100,27 @@ ul {
 }
 
 li {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.1);
+    /* Slightly transparent white */
     margin: 10px 0;
-    padding: 15px; /* Größere Polsterung */
+    padding: 15px;
+    /* Larger padding */
     border-radius: 5px;
+    color: #ffffff;
+    /* White text for visibility */
 }
 
 li button {
     margin-left: 10px;
+    background-color: #4d8ff4;
+    color: white;
+}
+
+li button:hover {
+    background-color: #8078ac;
 }
 
 .dashboard-content-inner {
-    width: calc(75% - 20px); /* 25% weniger breit */
+    width: calc(75% - 20px);
+    /* 75% width minus padding */
 }
