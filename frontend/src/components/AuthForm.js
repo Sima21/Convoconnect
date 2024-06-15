@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import './CommonStyles.css';
 import './AuthForm.css';
 import LogoImage from './Logo2.png'; // Ensure the path to the image is correct
+import GitLabLogo from './GitLab.png'; // Ensure the path to the image is correct
+import InstagramIcon from './InstagramIcon.png'; // Add your Instagram icon image path here
+
 
 function AuthForm() {
     const navigate = useNavigate();
@@ -102,6 +105,19 @@ function AuthForm() {
                         </ul>
                     </motion.div>
                 </div>
+                <footer className="footer">
+                    <div className="footer-links">
+                        <a href="https://gitlab.com/mj26143118/convoconnect.git" target="_blank" rel="noopener noreferrer">
+                            <img src={GitLabLogo} alt="GitLab Logo" />
+                        </a>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                            <img src={InstagramIcon} alt="Instagram Logo" />
+                        </a>
+                    </div>
+                    <div className="footer-text">
+                        © 2024 ConvoConnect. All rights reserved. <br />
+                    </div>
+                </footer>
             </div>
         </div>
     );
