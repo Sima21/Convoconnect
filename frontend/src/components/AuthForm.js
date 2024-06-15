@@ -6,7 +6,7 @@ import './AuthForm.css';
 import LogoImage from './Logo2.png'; // Ensure the path to the image is correct
 import GitLabLogo from './GitLab.png'; // Ensure the path to the image is correct
 import InstagramIcon from './InstagramIcon.png'; // Add your Instagram icon image path here
-
+import VideoConferenceImage from './vc.png'; // Add the correct path to your image
 
 function AuthForm() {
     const navigate = useNavigate();
@@ -39,7 +39,7 @@ function AuthForm() {
                     <span className="text">Developers Team</span>
                     <span className="icon">▶</span>
                     <div className="sidebar-info">
-                        Sima,<br/> 
+                        Sima,<br/>
                         Lotfi,<br/>
                         Mojtaba<br/>
                     </div>
@@ -105,6 +105,9 @@ function AuthForm() {
                         </ul>
                     </motion.div>
                 </div>
+                <div className="image-container">
+                    <img src={VideoConferenceImage} alt="Video Conference" />
+                </div>
                 <footer className="footer">
                     <div className="footer-links">
                         <a href="https://gitlab.com/mj26143118/convoconnect.git" target="_blank" rel="noopener noreferrer">
@@ -116,6 +119,7 @@ function AuthForm() {
                     </div>
                     <div className="footer-text">
                         © 2024 ConvoConnect. All rights reserved. <br />
+                        Best practices: Ensure accessibility, maintain responsive design, and provide clear navigation.
                     </div>
                 </footer>
             </div>

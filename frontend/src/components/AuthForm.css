@@ -9,14 +9,19 @@
     align-items: center;
     height: 100vh;
     width: 100%;
-    background: linear-gradient(to right, #224c8c, #3a7ec3, #8a4df4, #896ca0, #4372ac, #4d8af4, #3a7ec3, #224c8c);
+    background: linear-gradient(to right, #224c8c, #3a7ec3, #8a4df4, #426158, #4372ac, #4d8af4, #3a7ec3, #224c8c);
     background-size: 400% 400%;
-    animation: gradientAnimation 15s ease infinite;
+    animation: gradientAnimation 3s ease forwards;
+    /* Run the animation for 3 seconds, easing in and out, and keep the final state */
+    animation-delay: 0.5s;
+    /* Start the animation after 3 seconds */
     color: white;
     padding-left: 320px;
     /* Add padding to prevent overlap with the sidebar */
     box-sizing: border-box;
     /* Ensure padding is included in total width */
+    animation-fill-mode: forwards;
+    /* Keep the final state of the animation */
 }
 
 @keyframes gradientAnimation {
@@ -24,14 +29,11 @@
         background-position: 0% 10%;
     }
 
-    50% {
+    100% {
         background-position: 50% 10%;
     }
-
-    100% {
-        background-position: 0% 10%;
-    }
 }
+
 
 /* Sidebar container */
 .sidebar {
@@ -282,4 +284,43 @@
     font-size: 14px;
     text-align: right;
     padding-right: 40px;
+}
+
+.image-container {
+    position: absolute;
+    bottom: 60px;
+    /* Adjust based on your layout */
+    left: 20px;
+    /* Adjust based on your layout */
+    width: 90%;
+    /* Adjust to fit the sidebar */
+    max-width: 500px;
+    /* Ensure it fits within the sidebar */
+    margin: 20px 0;
+    /* Adjust margins to align to the left */
+    display: flex;
+    justify-content: flex-start;
+    /* Align to the left */
+    align-items: center;
+    opacity: 0;
+    transform: translateY(100%);
+    animation: slideUpFadeIn 1.5s ease-out forwards;
+}
+
+@keyframes slideUpFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+   
 }
