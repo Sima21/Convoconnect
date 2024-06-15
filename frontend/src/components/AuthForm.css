@@ -9,7 +9,7 @@
     align-items: center;
     height: 100vh;
     width: 100%;
-    background: linear-gradient(to right, #224c8c, #3a7ec3, #8a4df4, #426158, #4372ac, #4d8af4, #3a7ec3, #224c8c);
+    background: linear-gradient(to right, #285190, #3a7ec3, #8a4df4, #426158, #4372ac, #4d8af4, #3a7ec3, #20467e);
     background-size: 400% 400%;
     animation: gradientAnimation 3s ease forwards;
     /* Run the animation for 3 seconds, easing in and out, and keep the final state */
@@ -39,7 +39,7 @@
 .sidebar {
     width: 300px;
     padding: 20px;
-    background: rgba(29, 80, 80, 0.75);
+    background: rgba(29, 80, 75, 0.75);
     color: white;
     display: flex;
     flex-direction: column;
@@ -50,7 +50,7 @@
     left: 0;
     border-radius: 0 8px 8px 0;
     overflow: hidden;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
     animation: sidebarFadeIn 2s ease-out forwards;
     /* Apply fade-in animation */
     opacity: 0.05;
@@ -177,7 +177,7 @@
 
 @keyframes logoAnimation {
     0% {
-        transform: translateX(-15%);
+        transform: translateX(100%);
         opacity: 0.1;
     }
 
@@ -289,15 +289,10 @@
 .image-container {
     position: absolute;
     bottom: 60px;
-    /* Adjust based on your layout */
     left: 20px;
-    /* Adjust based on your layout */
     width: 90%;
-    /* Adjust to fit the sidebar */
     max-width: 500px;
-    /* Ensure it fits within the sidebar */
     margin: 20px 0;
-    /* Adjust margins to align to the left */
     display: flex;
     justify-content: flex-start;
     /* Align to the left */
