@@ -13,7 +13,7 @@
 }
 
 .button:hover {
-    background-color: #2107a4;
+    background-color: #d9b4ca;
     /* Dark blue for animation */
     color: white;
     /* Ensure text remains white on hover */
@@ -30,7 +30,7 @@
 .button span::after {
     content: '';
     position: absolute;
-    background: #2107a4;
+    background: #ffffff;
     /* Dark blue for animation */
     transition: all 0.1s;
 }

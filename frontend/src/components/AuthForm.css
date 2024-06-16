@@ -9,19 +9,14 @@
     align-items: center;
     height: 100vh;
     width: 100%;
-    background: linear-gradient(to right, #285190, #3a7ec3, #8a4df4, #426158, #4372ac, #4d8af4, #3a7ec3, #20467e);
+    background: linear-gradient(to right, #224c8c, #3a7ec3, #224c8c, #3a7ec3, #4372ac, #4d8af4, #3a7ec3, #20467e);
     background-size: 400% 400%;
     animation: gradientAnimation 3s ease forwards;
-    /* Run the animation for 3 seconds, easing in and out, and keep the final state */
     animation-delay: 0.5s;
-    /* Start the animation after 3 seconds */
     color: white;
     padding-left: 320px;
-    /* Add padding to prevent overlap with the sidebar */
     box-sizing: border-box;
-    /* Ensure padding is included in total width */
     animation-fill-mode: forwards;
-    /* Keep the final state of the animation */
 }
 
 @keyframes gradientAnimation {
@@ -34,12 +29,11 @@
     }
 }
 
-
 /* Sidebar container */
 .sidebar {
     width: 300px;
     padding: 20px;
-    background: rgba(29, 80, 75, 0.75);
+    background: rgba(67, 5, 5, 0.226);
     color: white;
     display: flex;
     flex-direction: column;
@@ -52,10 +46,7 @@
     overflow: hidden;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
     animation: sidebarFadeIn 2s ease-out forwards;
-    /* Apply fade-in animation */
     opacity: 0.05;
-    /* Start with 5% opacity */
-    
 }
 
 @keyframes sidebarFadeIn {
@@ -80,15 +71,12 @@
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.1);
     max-height: 25px;
-    /* Initial height */
     overflow: hidden;
 }
 
 .sidebar-item:hover {
     background: rgba(255, 255, 255, 0.2);
-    /* Add hover effect */
     max-height: 200px;
-    /* Expand height on hover */
 }
 
 .sidebar-item .text {
@@ -119,13 +107,12 @@
     font-family: 'Trebuchet MS', sans-serif;
     font-weight: 200;
     backdrop-filter: blur(10px);
-    line-height: 1.5; /* Ensure items are spaced properly */
+    line-height: 1.5;
 }
 
 .sidebar-item:hover .sidebar-info {
     display: block;
     background: rgba(34, 83, 109, 0.522);
-    /* Show info on hover */
 }
 
 .sidebar-item .text {
@@ -150,7 +137,6 @@
 .sidebar-gitlab-logo {
     margin-top: 20px;
     width: 100px;
-    /* Adjust size as needed */
     height: auto;
 }
 
@@ -161,18 +147,14 @@
     margin-top: 45px;
     padding: 35px;
     padding-left: 0px;
-    /* Adjust as needed */
 }
 
 .header-logo {
     width: 95px;
     height: 95px;
     margin-right: 20px;
-    /* Space between logo and text */
     border-radius: 50%;
-    /* Make the logo a circle */
     animation: logoAnimation 2.5s ease-out forwards;
-    /* Apply the animation */
 }
 
 @keyframes logoAnimation {
@@ -245,12 +227,10 @@
     padding-right: 20px;
     padding-bottom: 20px;
     padding-left: 0;
-    /* Ensure text is centered */
 }
 
 .footer {
     width: 100%;
-    height:0.5%;
     background: rgba(29, 80, 80, 0.75);
     color: white;
     display: flex;
@@ -295,7 +275,6 @@
     margin: 20px 0;
     display: flex;
     justify-content: flex-start;
-    /* Align to the left */
     align-items: center;
     opacity: 0;
     transform: translateY(100%);
@@ -317,5 +296,131 @@
 .image-container img {
     width: 100%;
     height: auto;
-   
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        border-radius: 0;
+        box-shadow: none;
+        margin-bottom: 20px;
+    }
+
+    .sidebar-item {
+        max-height: none;
+    }
+
+    .button-container {
+        top: auto;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .header-with-logo {
+        flex-direction: column;
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    .main-content {
+        width: 100%;
+        max-width: none;
+        padding: 0 20px;
+    }
+
+    .footer {
+        flex-direction: column;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .footer .footer-text {
+        padding-right: 0;
+        margin-top: 10px;
+    }
+
+    .image-container {
+        width: 100%;
+        max-width: none;
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin-top: 20px;
+    }
+}
+
+.login-form-container {
+    position: absolute;
+    margin: 70px;
+    margin-right: 18px;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    animation: fadeInMove 2s ease forwards;
+    opacity: 0.1;
+}
+
+@keyframes fadeInMove {
+    0% {
+        opacity: 0.1;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 5px;
+    margin-right: 0px;
+    color: white;
+}
+
+.auth-form input {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    /* Ensure padding is included in the total width */
+}
+
+.auth-form button {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #224c8c;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-form button:hover {
+    background-color: #3a7ec3;
 }

@@ -171,16 +171,16 @@ function Dashboard() {
         <div className="dashboard-container">
             <div className="dashboard-header">
                 <h1 className="bubble-text">
-                    {"Welcome to ".split("").map((char, idx) => (
-                        <span className={bubbleStyles.hoverText} key={idx}>{char}</span>
-                    ))}
-                    <span style={{ textDecoration: 'underline', marginLeft: '5px', marginRight: '5px' }}>
-                        {username || "User"}
-                    </span>
-                    {"'s Dashboard".split("").map((char, idx) => (
-                        <span className={bubbleStyles.hoverText} key={idx + 100}>{char}</span>
-                    ))}
-                </h1>
+                {"Welcome to ".split("").map((char, idx) => (
+                    <span className={bubbleStyles.hoverText} key={idx}>{char}</span>
+                ))}
+                <span style={{ textDecoration: 'underline', marginLeft: '5px', marginRight: '5px' }}>
+                    {username || "User"}
+                </span>
+                {"'s Dashboard".split("").map((char, idx) => (
+                    <span className={bubbleStyles.hoverText} key={idx + 100}>{char}</span>
+                ))}
+            </h1>
 
                 <button className={buttonStyles.button} onClick={logout}>
                     <span>Logout</span>
@@ -217,7 +217,7 @@ function Dashboard() {
                                 <li key={group.id}>
                                     <strong>Group Name:</strong> {group.name}
                                     {group.isOwner ? '' : ` - ( Shared by:  ${group.ownerDetails ? group.ownerDetails.username : 'Unknown'} )`}
-                                    <div className="button-container">
+                                    <div className="group-actions-container">
                                         {group.isOwner ? (
                                             <>
                                                 <button className={buttonStyles.button} onClick={() => handleDeleteGroup(group.id)}>
@@ -245,29 +245,31 @@ function Dashboard() {
                                                         </button>
                                                     </div>
                                                 )}
-                                                <input
-                                                    type="email"
-                                                    placeholder="Enter email"
-                                                    value={selectedGroupId === group.id ? email : ''}
-                                                    onChange={e => {
-                                                        setEmail(e.target.value);
-                                                        setSelectedGroupId(group.id);
-                                                    }}
-                                                />
-                                                <select
-                                                    value={action}
-                                                    onChange={e => setAction(e.target.value)}
-                                                >
-                                                    <option value="invite">Invite Member</option>
-                                                    <option value="share">Share Group</option>
-                                                </select>
-                                                <button className={buttonStyles.button} onClick={() => handleAction(group.id, email, action)}>
-                                                    <span>Submit</span>
-                                                    <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
-                                                    <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
-                                                    <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
-                                                    <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
-                                                </button>
+                                                <div className="invite-share-container">
+                                                    <input
+                                                        type="email"
+                                                        placeholder="Enter email"
+                                                        value={selectedGroupId === group.id ? email : ''}
+                                                        onChange={e => {
+                                                            setEmail(e.target.value);
+                                                            setSelectedGroupId(group.id);
+                                                        }}
+                                                    />
+                                                    <select
+                                                        value={action}
+                                                        onChange={e => setAction(e.target.value)}
+                                                    >
+                                                        <option value="invite">Invite Member</option>
+                                                        <option value="share">Share Group</option>
+                                                    </select>
+                                                    <button className={buttonStyles.button} onClick={() => handleAction(group.id, email, action)}>
+                                                        <span>Submit</span>
+                                                        <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
+                                                        <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
+                                                        <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
+                                                        <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
+                                                    </button>
+                                                </div>
                                             </>
                                         ) : (
                                             meetLinks[group.id] && (
