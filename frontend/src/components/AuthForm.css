@@ -3,7 +3,7 @@
 /* Import Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
-/* Container for the entire form and logo */
+/* Container for the entire form und logo */
 .container {
     position: relative;
     display: flex;
@@ -32,22 +32,24 @@
 
 /* Sidebar container */
 .sidebar {
-    width: 300px;
+    width: 250px; /* Schmaler gemacht */
+    height: 100vh; /* Höhe des Bildschirms */
     padding: 20px;
+    padding-top: 90px; /* Abstand zur Navbar */
     background: rgba(67, 5, 5, 0.226);
     color: white;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     position: fixed;
-    top: 0;
-    bottom: 0;
+    top: 0; /* Startet am oberen Rand */
     left: 0;
     border-radius: 0 8px 8px 0;
     overflow: hidden;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
     animation: sidebarFadeIn 2s ease-out forwards;
     opacity: 0.05;
+    z-index: 1100; /* Über der Navbar */
 }
 
 @keyframes sidebarFadeIn {
@@ -214,18 +216,18 @@
 }
 
 .main-content {
-    margin-top: 70px; /* Anpassung, um Überlappung mit der Navigationsleiste zu vermeiden */
+    margin-top: 120px; /* Abstand unter der Navbar */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 80%;
     max-width: 800px;
-    margin: auto;
     text-align: center;
     padding-right: 20px;
     padding-bottom: 20px;
     padding-left: 0;
+    margin: auto;
 }
 
 .footer {
@@ -303,7 +305,7 @@
     margin: 20px auto; /* Zentriert mit automatischen Seitenabständen */
     height: auto; /* Höhe automatisch an den Inhalt anpassen */
     position: fixed;
-    top: 20px; /* Abstand von oben */
+    top: 0; /* Oben am Bildschirm */
     left: 50%; /* Zentrierung */
     transform: translateX(-50%); /* Zentrierung */
     display: flex;
@@ -436,6 +438,7 @@
 
     .sidebar-item {
         max-height: none;
+        margin-top: 100px; /* Abstand zur Navbar */
     }
 
     .button-container {
@@ -454,6 +457,7 @@
         width: 100%;
         max-width: none;
         padding: 0 20px;
+        margin-top: 150px; /* Abstand zur Navbar */
     }
 
     .footer {
@@ -490,6 +494,6 @@
     }
 
     .main-content {
-        margin-top: 100px; /* Anpassung für mobile Ansicht */
+        margin-top: 150px; /* Anpassung für mobile Ansicht */
     }
 }
