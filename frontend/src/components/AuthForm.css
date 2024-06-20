@@ -245,12 +245,19 @@
     bottom: 0;
     left: 0;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1500; /* Ensure the footer is above other content */
 }
 
 .footer .footer-links {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+.footer .footer-links a {
+    display: flex; /* Fügt Flexbox-Layout hinzu */
+    align-items: center; /* Zentriert die Bilder vertikal */
+    z-index: 1600; /* Ensure links are clickable */
 }
 
 .footer .footer-links img {
@@ -317,7 +324,7 @@
     background-color: rgba(34, 76, 140, 0.9); /* Halbtransparenter Hintergrund */
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 1200;
     border-radius: 10px; /* Abgerundete Ecken für ein schwebendes Gefühl */
     flex-wrap: wrap; /* Inhalte umbrechen lassen, falls nötig */
 }
@@ -400,6 +407,7 @@
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    z-index: 1300; /* Ensure button is clickable */
 }
 
 .navbar-link:hover {
@@ -415,6 +423,7 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
+    z-index: 1300; /* Ensure button is clickable */
 }
 
 .google-login-button:hover {
