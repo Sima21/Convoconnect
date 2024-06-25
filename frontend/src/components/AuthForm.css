@@ -1,7 +1,9 @@
+/* AuthForm.css */
+
 /* Import Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
-/* Container for the entire form and logo */
+/* Container for the entire form und logo */
 .container {
     position: relative;
     display: flex;
@@ -14,16 +16,16 @@
     animation: gradientAnimation 3s ease forwards;
     animation-delay: 0.5s;
     color: white;
-    padding-left: 320px;
     box-sizing: border-box;
     animation-fill-mode: forwards;
+    padding-left: 320px;
+    overflow: hidden; /* Fixiert den Hintergrund */
 }
 
 @keyframes gradientAnimation {
     0% {
         background-position: 0% 10%;
     }
-
     100% {
         background-position: 50% 10%;
     }
@@ -31,29 +33,30 @@
 
 /* Sidebar container */
 .sidebar {
-    width: 300px;
+    width: 250px;
+    height: 100vh;
     padding: 20px;
+    padding-top: 90px; /* Abstand zur Navbar */
     background: rgba(67, 5, 5, 0.226);
     color: white;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    position: fixed;
+    position: fixed; /* Fixiert die Sidebar */
     top: 0;
-    bottom: 0;
     left: 0;
     border-radius: 0 8px 8px 0;
     overflow: hidden;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
     animation: sidebarFadeIn 2s ease-out forwards;
     opacity: 0.05;
+    z-index: 1100; /* Über der Navbar */
 }
 
 @keyframes sidebarFadeIn {
     0% {
         opacity: 0.05;
     }
-
     100% {
         opacity: 1;
     }
@@ -103,7 +106,7 @@
     margin-top: 5px;
     width: fit-content;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    font-size: 15px;
+    font-size: 12px; /* Schriftgröße angepasst */
     font-family: 'Trebuchet MS', sans-serif;
     font-weight: 200;
     backdrop-filter: blur(10px);
@@ -162,7 +165,6 @@
         transform: translateX(100%);
         opacity: 0.1;
     }
-
     100% {
         transform: translateX(0);
         opacity: 1;
@@ -196,7 +198,6 @@
         opacity: 0;
         transform: scale(0.5) translate(-30px, -5%);
     }
-
     100% {
         opacity: 1;
         transform: scale(1) translate(0, 0);
@@ -219,7 +220,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Starten Sie den Inhalt am Anfang */
     width: 80%;
     max-width: 800px;
     margin: auto;
@@ -227,6 +228,9 @@
     padding-right: 20px;
     padding-bottom: 20px;
     padding-left: 0;
+    margin-top: 120px; /* Abstand unter der Navbar */
+    overflow-y: auto; /* Ermöglicht Scrollen im main-content */
+    height: calc(100vh - 120px); /* Höhe anpassen, um Platz für Navbar zu lassen */
 }
 
 .footer {
@@ -241,12 +245,19 @@
     bottom: 0;
     left: 0;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1500; /* Ensure the footer is above other content */
 }
 
 .footer .footer-links {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+.footer .footer-links a {
+    display: flex; /* Fügt Flexbox-Layout hinzu */
+    align-items: center; /* Zentriert die Bilder vertikal */
+    z-index: 1600; /* Ensure links are clickable */
 }
 
 .footer .footer-links img {
@@ -286,7 +297,6 @@
         opacity: 0;
         transform: translateY(100%);
     }
-
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -296,6 +306,128 @@
 .image-container img {
     width: 100%;
     height: auto;
+}
+
+/* Navbar styles */
+.navbar {
+    width: 80%; /* Breiter, um alle Inhalte aufzunehmen */
+    max-width: 1200px; /* Maximale Breite */
+    margin: 20px auto; /* Zentriert mit automatischen Seitenabständen */
+    height: auto; /* Höhe automatisch an den Inhalt anpassen */
+    position: fixed;
+    top: 0; /* Oben am Bildschirm */
+    left: 50%; /* Zentrierung */
+    transform: translateX(-50%); /* Zentrierung */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(34, 76, 140, 0.9); /* Halbtransparenter Hintergrund */
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1200;
+    border-radius: 10px; /* Abgerundete Ecken für ein schwebendes Gefühl */
+    flex-wrap: wrap; /* Inhalte umbrechen lassen, falls nötig */
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: white;
+}
+
+.navbar-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0; /* Kein Abstand zum oberen Bereich der Navbar */
+}
+
+.auth-form label.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.auth-form input {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.auth-form button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #224c8c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.auth-form button[type="submit"]:hover {
+    background-color: #3a7ec3;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    background-color: #42a5f5; /* Helles Blau passend zum Hintergrund */
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 1300; /* Ensure button is clickable */
+}
+
+.navbar-link:hover {
+    background-color: #1e88e5; /* Etwas dunkleres Blau für den Hover-Effekt */
+}
+
+.google-login-button {
+    padding: 10px 20px;
+    background-color: #66bb6a; /* Helles Grün passend zum Hintergrund */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    z-index: 1300; /* Ensure button is clickable */
+}
+
+.google-login-button:hover {
+    background-color: #43a047; /* Etwas dunkleres Grün für den Hover-Effekt */
 }
 
 /* Responsive Design */
@@ -318,6 +450,7 @@
 
     .sidebar-item {
         max-height: none;
+        margin-top: 100px; /* Abstand zur Navbar */
     }
 
     .button-container {
@@ -336,6 +469,7 @@
         width: 100%;
         max-width: none;
         padding: 0 20px;
+        margin-top: 150px; /* Abstand zur Navbar */
     }
 
     .footer {
@@ -357,70 +491,21 @@
         left: auto;
         margin-top: 20px;
     }
-}
 
-.login-form-container {
-    position: absolute;
-    margin: 70px;
-    margin-right: 18px;
-    top: 10px;
-    right: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 10px;
-    border-radius: 8px;
-    animation: fadeInMove 2s ease forwards;
-    opacity: 0.1;
-}
-
-@keyframes fadeInMove {
-    0% {
-        opacity: 0.1;
-        transform: translateY(-20px);
+    .navbar {
+        width: 90%;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
+    .navbar-right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
     }
-}
 
-.auth-form label {
-    display: block;
-    margin-bottom: 5px;
-    margin-right: 0px;
-    color: white;
-}
-
-.auth-form input {
-    display: block;
-    width: 100%;
-    max-width: 200px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-    /* Ensure padding is included in the total width */
-}
-
-.auth-form button {
-    display: block;
-    width: 100%;
-    max-width: 200px;
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #224c8c;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.auth-form button:hover {
-    background-color: #3a7ec3;
+    .main-content {
+        margin-top: 150px; /* Anpassung für mobile Ansicht */
+    }
 }

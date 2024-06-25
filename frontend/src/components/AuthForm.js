@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './CommonStyles.css';
 import './AuthForm.css';
-import LogoImage from './Logo2.png'; // Ensure the path to the image is correct
-import GitLabLogo from './GitLab.png'; // Ensure the path to the image is correct
-import InstagramIcon from './InstagramIcon.png'; // Add your Instagram icon image path here
-import VideoConferenceImage from './vc.png'; // Add the correct path to your image
-import { createUser, loginUser } from '../api'; // Ensure these are imported correctly
+import LogoImage from './Logo2.png'; // Stellen Sie sicher, dass Sie den tatsächlichen Pfad zu Ihrem Logo verwenden
+import GitLabLogo from './GitLab.png'; // Stellen Sie sicher, dass Sie den tatsächlichen Pfad verwenden
+import InstagramIcon from './InstagramIcon.png'; // Stellen Sie sicher, dass Sie den tatsächlichen Pfad verwenden
+import VideoConferenceImage from './vc.png'; // Stellen Sie sicher, dass Sie den tatsächlichen Pfad verwenden
+import { createUser, loginUser } from '../api'; // Stellen Sie sicher, dass diese korrekt importiert sind
 
 function AuthForm() {
     const [isLogin, setIsLogin] = useState(true);
@@ -60,6 +60,37 @@ function AuthForm() {
 
     return (
         <div className="container">
+            <div className="navbar">
+                <div className="navbar-left">
+                    <img src={LogoImage} alt="Convoconnect Logo" className="navbar-logo" />
+                    <span className="navbar-title">Convoconnect</span>
+                </div>
+                <div className="navbar-center">
+                    <form className="auth-form" onSubmit={handleSubmit}>
+                        <label htmlFor="username" className="sr-only">Username</label>
+                        <input type="text" id="username" name="username" value={userData.username} onChange={handleChange} required placeholder="Username" />
+                        {!isLogin && (
+                            <>
+                                <label htmlFor="email" className="sr-only">Email</label>
+                                <input type="email" id="email" name="email" value={userData.email} onChange={handleChange} required placeholder="Email" />
+                            </>
+                        )}
+                        <label htmlFor="password" className="sr-only">Password</label>
+                        <input type="password" id="password" name="password" value={userData.password} onChange={handleChange} required placeholder="Password" />
+                        <button type="submit" disabled={loading}>{isLogin ? 'Login' : 'Register'}</button>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
+                    </form>
+                </div>
+                <div className="navbar-right">
+                    <button
+                        className="navbar-link"
+                        onClick={() => setIsLogin(!isLogin)}
+                    >
+                        {isLogin ? 'Need to register?' : 'Already have an account?'}
+                    </button>
+                    <button className="google-login-button" onClick={handleGoogleLogin}>Login with Google</button>
+                </div>
+            </div>
             <div className="sidebar">
                 <div className="logo-container">
                     <div className="circle-image"></div>
@@ -68,9 +99,9 @@ function AuthForm() {
                     <span className="text">Developers Team</span>
                     <span className="icon">▶</span>
                     <div className="sidebar-info">
-                        Sima,<br/>
-                        Lotfi,<br/>
-                        Mojtaba<br/>
+                        Sima,<br />
+                        Lotfi,<br />
+                        Mojtaba<br />
                     </div>
                 </div>
                 <div className="sidebar-item">
@@ -89,33 +120,7 @@ function AuthForm() {
                 </div>
             </div>
             <div className="main-content">
-                <div className="button-container">
-                    <motion.button
-                        className="button auth-button-toggle"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        type="button"
-                        onClick={() => setIsLogin(!isLogin)}
-                    >
-                        {isLogin ? 'Need to register?' : 'Already have an account?'}
-                    </motion.button>
-                    <motion.button
-                        className="button auth-button-google"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        type="button"
-                        onClick={handleGoogleLogin}
-                    >
-                        Login with Google
-                    </motion.button>
-                </div>
                 <div className="form-container">
-                    <div className="header-with-logo">
-                        <img src={LogoImage} alt="ConvoConnect Logo" className="header-logo" />
-                        <motion.div className="auth-header" initial={{ y: 100, opacity: 0.2 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1 }}>
-                            ConvoConnect
-                        </motion.div>
-                    </div>
                     <motion.div className="auth-subheader" initial={{ y: 100, opacity: 0.2 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }}>
                         Overview
                     </motion.div>
@@ -147,26 +152,6 @@ function AuthForm() {
                 </div>
                 <div className="image-container">
                     <img src={VideoConferenceImage} alt="Video Conference" />
-                </div>
-                <div className="login-form-container">
-                    <form className="auth-form" onSubmit={handleSubmit}>
-                        <label>
-                            Username:
-                            <input type="text" name="username" value={userData.username} onChange={handleChange} required />
-                        </label>
-                        {!isLogin && (
-                            <label>
-                                Email:
-                                <input type="email" name="email" value={userData.email} onChange={handleChange} required />
-                            </label>
-                        )}
-                        <label>
-                            Password:
-                            <input type="password" name="password" value={userData.password} onChange={handleChange} required />
-                        </label>
-                        {error && <p style={{ color: 'red' }}>{error}</p>}
-                        <button type="submit" disabled={loading}>{isLogin ? 'Login' : 'Register'}</button>
-                    </form>
                 </div>
                 <footer className="footer">
                     <div className="footer-links">
